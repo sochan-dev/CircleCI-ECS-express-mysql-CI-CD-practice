@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mariadb:/var/lib/mariadb
+    environment:
+      - MYSQL_DATABASE=initialdb
+      - MYSQL_ROOT_PASSWORD=${SQL_PMA_PASSWORD}
+    env_file:
+      - .env
+    tty: true
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mariadb #mysqlサービス名を指定
+      - PMA_USER=root
+      - PMA_PASSWORD=${SQL_PMA_PASSWORD}
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:80
+    volumes:
+      - ./phpmyadmin/sessions:/sessions
+    env_file:
+      - .env

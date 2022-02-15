@@ -1,0 +1,50 @@
+version: '3.3'
+services:
+  express:
+    container_name: express
+    image: node:14.17.4-alpine
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: ash -c 'yarn && yarn dev'
+    ports:
+      - ${PORT}:${PORT}
+    expose:
+      - ${PORT}
+    env_file: .env
+    environment:
+      CHOKIDAR_USEPOLLING: 1
+    tty: true
+  mysql:
+    container_name: mysql
+    image: mysql:5.7.16
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=initialdb
+      - MYSQL_ROOT_PASSWORD=${SQL_PMA_PASSWORD}
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - .env
+    tty: true
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql #mysqlサービス名を指定
+      - PMA_USER=root
+      - PMA_PASSWORD=${SQL_PMA_PASSWORD}
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    ports:
+      - 8080:80
+    volumes:
+      - ./phpmyadmin/sessions:/sessions
+    env_file:
+      - .env
