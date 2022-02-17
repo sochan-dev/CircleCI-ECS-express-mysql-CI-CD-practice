@@ -35,7 +35,7 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysql #mysqlサービス名を指定
+      - PMA_HOST=mysql
       - PMA_USER=root
       - PMA_PASSWORD=${SQL_PMA_PASSWORD}
     links:

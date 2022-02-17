@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --ext ts,yaml,graphql --exec ts-node src/index.ts"
+    "dev": "nodemon --ext ts,yaml --exec ts-node src/index.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
