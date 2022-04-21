@@ -1,11 +1,12 @@
 import express from 'express';
 import mysql from 'mysql2';
 import cors from 'cors';
-const PORT = process.env.PORT;
+import dotenv from 'dotenv';
 const app = express();
+dotenv.config();
 app.use(cors({ origin: '*' }));
 
-const db = mysql.createConnection({
+/*const db = mysql.createConnection({
   host: 'mysql',
   user: 'root',
   password: 'password',
@@ -24,7 +25,12 @@ app.get('/', (req, res) => {
     });
   });
 });
+*/
+app.get('/hello', (req, res) => {
+  //res.set({ 'Access-Control-Allow-Origin': '*' });
+  res.json({ hello: 'hello' });
+});
 
-app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening at http://localhost:${process.env.PORT}`);
 });
