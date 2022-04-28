@@ -39,7 +39,7 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - master
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
@@ -50,4 +50,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - master
