@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     db.query('select * from test LIMIT 1', (err, result) => {
       if (err) throw err;
       console.log(result);
-      res.json({ msg: '成功！', result: result });
+      res.json({ msg: '成功!!!!!!!', result: result });
     });
   });
 });
